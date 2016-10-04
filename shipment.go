@@ -12,6 +12,14 @@ import (
 	"time"
 )
 
+//these are all the possible label formats
+const (
+	LabelFormatEPL2 = "EPL2"
+	LabelFormatPDF  = "PDF"
+	LabelFormatPNG  = "PNG"
+	LabelFormatZPL  = "ZPL"
+)
+
 //Shipment is an EasyPost object that defines a shipment
 type Shipment struct {
 	ID        string    `json:"id"`
@@ -139,12 +147,22 @@ func (s *Shipment) Buy() error {
 	}
 
 	if s.Error != nil {
-		return errors.New(fmt.Sprintf("Failed to request EasyPost shipment purcahse: %v", s.Error.Message))
+		return fmt.Errorf("Failed to request EasyPost shipment purcahse: %v", s.Error.Message)
 	}
 
 	return nil
 }
 
+//ConvertLabel is requesting shipping label conversion to the given file format
+func (s *Shipment) ConvertLabel(format string) error {
+	obj, err := Request.do("GET", "shipment", fmt.Sprintf("%v/label?file_format=%v", s.ID, format), "")
+	if err != nil {
+		return fmt.Errorf("Failed to request EasyPost shipping label conversion : %v", err)
+	}
+	return json.Unmarshal(obj, &s)
+}
+
+//Insure is requesting insurance for the given amount
 func (s *Shipment) Insure(amount float32) error {
 	obj, err := Request.do("POST", "shipment", fmt.Sprintf("%v/insure", s.ID), fmt.Sprintf("amount=%v", amount))
 	if err != nil {
@@ -157,6 +175,7 @@ func (s *Shipment) Insure(amount float32) error {
 func (s Shipment) getCreatePayload(prefix string) string {
 	bodyString := ""
 
+	bodyString = fmt.Sprintf("%v&%vfile_format=%v", bodyString, prefix, LabelFormatPNG)
 	bodyString = fmt.Sprintf("%v&%v[from_address][id]=%v", bodyString, prefix, s.FromAddress.ID)
 	bodyString = fmt.Sprintf("%v&%v[to_address][id]=%v", bodyString, prefix, s.ToAddress.ID)
 	var parcelPrefix = fmt.Sprintf("%v[parcel]", prefix)
@@ -167,6 +186,10 @@ func (s Shipment) getCreatePayload(prefix string) string {
 	if s.Options != nil {
 		var optionsPrefix = fmt.Sprintf("%v[options]", prefix)
 		bodyString = fmt.Sprintf("%v&%v", bodyString, s.Options.getCreatePayload(optionsPrefix))
+	}
+
+	if s.IsReturn {
+		bodyString = fmt.Sprintf("%v&%v[is_return]=true", bodyString, prefix)
 	}
 
 	return bodyString
