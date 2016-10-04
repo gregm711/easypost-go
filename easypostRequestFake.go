@@ -1,8 +1,6 @@
 package easypost
 
-import (
-	"github.com/empatica/web_embrace_api/easypost/fake"
-)
+import "github.com/empatica/easypost-go/fake"
 
 type RequestControllerFake struct{}
 
