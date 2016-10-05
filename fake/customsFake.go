@@ -22,7 +22,7 @@ func init() {
 	      "hs_tariff_number": "123456",
 	      "origin_country": "US",
 	      "quantity": 1,
-	      "value": 10,
+	      "value": "10",
 	      "weight": 5,
 	      "created_at": "2013-04-22T07:17:51Z",
 	      "updated_at": "2013-04-22T07:17:51Z"
@@ -33,7 +33,7 @@ func init() {
 	      "hs_tariff_number": "654321",
 	      "origin_country": "US",
 	      "quantity": 2,
-	      "value": 23,
+	      "value": "23",
 	      "weight": 11,
 	      "created_at": "2013-04-22T07:17:51Z",
 	      "updated_at": "2013-04-22T07:17:51Z"

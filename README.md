@@ -13,7 +13,7 @@ go get github.com/empatica/easypost-go
 
 Then on your go project
 ```
-import "github.com/empatica/easypost-go"
+import "github.com/empatica/easypost-go/easypost"
 ```
 
 ## Setup

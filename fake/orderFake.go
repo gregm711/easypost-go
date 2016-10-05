@@ -15,10 +15,12 @@ func init() {
 	  "created_at": "2016-02-17T02:51:04Z",
 	  "updated_at": "2016-02-17T02:51:04Z",
 	  "customs_info": null,
-	  "to_address": { ... },
-	  "from_address": { ... },
-	  "buyer_address": { ... },
-	  "return_address": { ... },
+	  "to_address": {
+	  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+	  },
+	  "from_address": {
+	  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+	  },
 	  "items": [],
 	  "containers": [],
 	  "shipments": [
@@ -32,7 +34,7 @@ func init() {
 	      "options": {"currency": "USD", "label_date": null},
 	      "reference": null,
 	      "status": "unknown",
-	      "tracking_code": null,
+	      "tracking_code": "1ZE6A4850190733810",
 	      "batch_id": null,
 	      "batch_status": null,
 	      "batch_message": null,
@@ -48,10 +50,12 @@ func init() {
 	        "updated_at": "2013-04-22T05:39:57Z"
 	      },
 	      "customs_info": null,
-	      "to_address": { ... },
-	      "from_address": { ... },
-	      "buyer_address": { ... },
-	      "return_address": { ... },
+	      "to_address": {
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
+	      "from_address": {
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
 	      "postage_label": null,
 	      "rates": [
 	        {
@@ -116,7 +120,7 @@ func init() {
 	          "est_delivery_days": null,
 	          "shipment_id": "shp_b701a9da21424a5f85a09530c9f924aa",
 	          "carrier_account_id": "ca_f02596dcabbb46a8ba823280efc277bb"
-	        },
+	        }
 	      ],
 	      "refund_status": null,
 	      "scan_form": null,
@@ -136,7 +140,7 @@ func init() {
 	      "options": {"currency": "USD", "label_date": null},
 	      "reference": null,
 	      "status": "unknown",
-	      "tracking_code": null,
+	      "tracking_code": "1ZE6A4850190733810",
 	      "batch_id": null,
 	      "batch_status": null,
 	      "batch_message": null,
@@ -152,10 +156,12 @@ func init() {
 	        "updated_at": "2013-04-22T05:39:57Z"
 	      },
 	      "customs_info": null,
-	      "to_address": { ... },
-	      "from_address": { ... },
-	      "buyer_address": { ... },
-	      "return_address": { ... },
+	      "to_address": {
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
+	      "from_address": {
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
 	      "postage_label": null,
 	      "rates": [],
 	      "refund_status": null,
@@ -165,7 +171,7 @@ func init() {
 	      "forms": [],
 	      "fees": [],
 	      "object": "Shipment"
-	    },
+	    }
 	  ],
 	  "rates": [
 	    {
@@ -230,7 +236,7 @@ func init() {
 	      "est_delivery_days": null,
 	      "shipment_id": "shp_7a387659db374a8ea197d7bba3009d5d",
 	      "carrier_account_id": "ca_f02596dcabbb46a8ba823280efc277bb"
-	    },
+	    }
 	  ],
 	  "object": "Order"
 	}
@@ -247,10 +253,12 @@ func init() {
 	  "created_at": "2016-02-17T02:51:04Z",
 	  "updated_at": "2016-02-17T02:51:04Z",
 	  "customs_info": null,
-	  "to_address": { ... },
-	  "from_address": { ... },
-	  "buyer_address": { ... },
-	  "return_address": { ... },
+	  "to_address": {	  	
+	  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+	  },
+	  "from_address": {	  	
+	  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+	  },
 	  "items": [],
 	  "containers": [],
 	  "shipments": [
@@ -264,7 +272,7 @@ func init() {
 	      "options": {"currency": "USD", "label_date": null},
 	      "reference": null,
 	      "status": "unknown",
-	      "tracking_code": null,
+	      "tracking_code": "1ZE6A4850190733810",
 	      "batch_id": null,
 	      "batch_status": null,
 	      "batch_message": null,
@@ -280,10 +288,12 @@ func init() {
 	        "updated_at": "2013-04-22T05:39:57Z"
 	      },
 	      "customs_info": null,
-	      "to_address": { ... },
-	      "from_address": { ... },
-	      "buyer_address": { ... },
-	      "return_address": { ... },
+	      "to_address": {	  	
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
+	      "from_address": {	  	
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
 	      "postage_label": {
 	        "id": "pl_317098e591fc4d0bbc94bf5e7e47668f",
 	        "object": "PostageLabel",
@@ -364,7 +374,7 @@ func init() {
 	          "est_delivery_days": null,
 	          "shipment_id": "shp_b701a9da21424a5f85a09530c9f924aa",
 	          "carrier_account_id": "ca_f02596dcabbb46a8ba823280efc277bb"
-	        },
+	        }
 	      ],
 	      "refund_status": null,
 	      "scan_form": null,
@@ -384,7 +394,7 @@ func init() {
 	      "options": {"currency": "USD", "label_date": null},
 	      "reference": null,
 	      "status": "unknown",
-	      "tracking_code": null,
+	      "tracking_code": "1ZE6A4850190733810",
 	      "batch_id": null,
 	      "batch_status": null,
 	      "batch_message": null,
@@ -400,10 +410,12 @@ func init() {
 	        "updated_at": "2013-04-22T05:39:57Z"
 	      },
 	      "customs_info": null,
-	      "to_address": { ... },
-	      "from_address": { ... },
-	      "buyer_address": { ... },
-	      "return_address": { ... },
+	      "to_address": {
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
+	      "from_address": {
+			  	"id": "adr_7a387659db374a8ea197d7bba3009d5d"
+			  },
 	      "postage_label": {
 	        "id": "pl_1a118b22c63f4bf9825437c01f6f9f38",
 	        "object": "PostageLabel",
@@ -429,7 +441,7 @@ func init() {
 	      "forms": [],
 	      "fees": [],
 	      "object": "Shipment"
-	    },
+	    }
 	  ],
 	  "rates": [
 	    {
@@ -494,7 +506,7 @@ func init() {
 	      "est_delivery_days": null,
 	      "shipment_id": "shp_7a387659db374a8ea197d7bba3009d5d",
 	      "carrier_account_id": "ca_f02596dcabbb46a8ba823280efc277bb"
-	    },
+	    }
 	  ],
 	  "object": "Order"
 	}
