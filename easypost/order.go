@@ -109,16 +109,15 @@ func (o Order) getCreatePayload() string {
 			bodyString = fmt.Sprintf("%v&%v", bodyString, s.Parcel.getCreatePayload(parcelPrefix))
 		}
 		if s.Options != nil {
-			if s.Options.LabelDate != "" {
-				bodyString = fmt.Sprintf("%v&%v[options][label_date]=%v", bodyString, shipmentPrefix, s.Options.LabelDate)
-			}
+			var optionsPrefix = fmt.Sprintf("%v[options]", shipmentPrefix)
+			bodyString = fmt.Sprintf("%v&%v", bodyString, s.Options.getCreatePayload(optionsPrefix))
 		}
 
 		var customsPrefix = fmt.Sprintf("order[shipments][%v][customs_info]", i)
 		if s.CustomsInfo.ID != "" {
 			bodyString = fmt.Sprintf("%v&%v[id]=%v", bodyString, customsPrefix, s.CustomsInfo.ID)
 		} else {
-			bodyString = fmt.Sprintf("%v&%v", bodyString, i, s.CustomsInfo.getCreatePayload(customsPrefix))
+			bodyString = fmt.Sprintf("%v&%v", bodyString, s.CustomsInfo.getCreatePayload(customsPrefix))
 		}
 	}
 
@@ -127,10 +126,7 @@ func (o Order) getCreatePayload() string {
 	}
 
 	if o.Options != nil {
-		if o.Options.LabelDate != "" {
-			bodyString = fmt.Sprintf("%v&order[options][label_date]=%v", bodyString, o.Options.LabelDate)
-		}
+		bodyString = fmt.Sprintf("%v&%v", bodyString, o.Options.getCreatePayload("order[options]"))
 	}
-
 	return bodyString
 }

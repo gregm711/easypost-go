@@ -18,6 +18,8 @@ const (
 	LabelFormatPDF  = "PDF"
 	LabelFormatPNG  = "PNG"
 	LabelFormatZPL  = "ZPL"
+
+	FormTypeInvoice = "commercial_invoice"
 )
 
 //Shipment is an EasyPost object that defines a shipment
@@ -36,7 +38,7 @@ type Shipment struct {
 	Parcel        Parcel       `json:"parcel"`
 	CustomsInfo   CustomsInfo  `json:"customs_info"`
 	ScanForm      ScanForm     `json:"scan_form"`
-	Forms         []ScanForm   `json:"forms"`
+	Forms         []Form       `json:"forms"`
 	Insurance     string       `json:"insurance"`
 	Rates         []Rate       `json:"rates"`
 	SelectedRate  Rate         `json:"selected_rate"`
@@ -79,6 +81,19 @@ type ScanForm struct {
 	FormURL       string   `json:"form_url"`
 	FormFileType  string   `json:"form_file_type"`
 	BatchID       string   `json:"batch_id"`
+}
+
+//Form is an EasyPost form object
+type Form struct {
+	ID        string    `json:"id"`
+	Object    string    `json:"object"`
+	Mode      string    `json:"mode"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	FormType               string `json:"form_type"`
+	FormURL                string `json:"form_url"`
+	SubmittedEletronically bool   `json:"submitted_electronically"`
 }
 
 type PostageLabel struct {
