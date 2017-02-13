@@ -66,23 +66,6 @@ type Message struct {
 	Message string `json:"message"`
 }
 
-//ScanForm is and EasyPost object and defines a form for a shipment
-type ScanForm struct {
-	ID        string    `json:"id"`
-	Object    string    `json:"object"`
-	Mode      string    `json:"mode"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-
-	Status        string   `json:"status"`
-	Message       string   `json:"message"`
-	Address       Address  `json:"address"`
-	TrackingCodes []string `json:"tracking_codes"`
-	FormURL       string   `json:"form_url"`
-	FormFileType  string   `json:"form_file_type"`
-	BatchID       string   `json:"batch_id"`
-}
-
 //Form is an EasyPost form object
 type Form struct {
 	ID        string    `json:"id"`
@@ -177,12 +160,38 @@ func (s *Shipment) ConvertLabel(format string) error {
 	return json.Unmarshal(obj, &s)
 }
 
+//Get Retrieves the shipment from EasyPost
+func (s *Shipment) Get() error {
+	obj, _ := Request.do("GET", "shipment", s.ID, "")
+	return json.Unmarshal(obj, &s)
+}
+
+//GetAll Retrieves the shipments from EasyPost
+func (s Shipment) GetAll() ([]Shipment, error) {
+	var shipments []Shipment
+	obj, _ := Request.do("GET", "shipment", "", "")
+	var err = json.Unmarshal(obj, &shipments)
+	return shipments, err
+}
+
+//GetRates Refreshes the rates the shipment and returns the updated shipment object from EasyPost
+func (s *Shipment) GetRates() error {
+	obj, _ := Request.do("GET", "shipment", fmt.Sprintf("%v/rates", s.ID), "")
+	return json.Unmarshal(obj, &s)
+}
+
 //Insure is requesting insurance for the given amount
 func (s *Shipment) Insure(amount float32) error {
 	obj, err := Request.do("POST", "shipment", fmt.Sprintf("%v/insure", s.ID), fmt.Sprintf("amount=%v", amount))
 	if err != nil {
 		return errors.New("Failed to request EasyPost shipment insurance")
 	}
+	return json.Unmarshal(obj, &s)
+}
+
+//Refund Requests the refund for the given shipment
+func (s *Shipment) Refund() error {
+	obj, _ := Request.do("GET", "shipment", fmt.Sprintf("%v/refund", s.ID), "")
 	return json.Unmarshal(obj, &s)
 }
 

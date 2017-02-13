@@ -14,6 +14,31 @@ const (
 	EventObjectScanForm = "ScanForm"
 	//EventObjectBatch is the type 'Batch' for an event
 	EventObjectBatch = "Batch"
+
+	//EventTypeTrackerCreated is the event for a new created tracker
+	EventTypeTrackerCreated = "tracker.created"
+	//EventTypeTrackerUpdated is the event for an updated tracker
+	EventTypeTrackerUpdated = "tracker.updated"
+	//EventTypeBatchCreated is the event for a new created batch
+	EventTypeBatchCreated = "batch.created"
+	//EventTypeBatchUpdated is the event for an updated batch
+	EventTypeBatchUpdated = "batch.updated"
+	//EventTypeScanFormCreated is the event for a new created scan form
+	EventTypeScanFormCreated = "scan_form.created"
+	//EventTypeScanFormUpdated is the event for an updated scan form
+	EventTypeScanFormUpdated = "scan_form.updated"
+	//EventTypeInsurancePurchased is the event for a purchased insurance
+	EventTypeInsurancePurchased = "insurance.purchased"
+	//EventTypeInsuranceCancelled is the event for a cancelled insurance
+	EventTypeInsuranceCancelled = "insurance.cancelled"
+	//EventTypeRefundSuccessful is the event for a successful refund
+	EventTypeRefundSuccessful = "refund.successful"
+	//EventTypePaymentCreated is the event for a new created payment
+	EventTypePaymentCreated = "payment.created"
+	//EventTypePaymentCompleted is the event for a completed payment
+	EventTypePaymentCompleted = "payment.completed"
+	//EventTypePaymentFailed is the event for a failed payment
+	EventTypePaymentFailed = "payment.failed"
 )
 
 //Event is created by changes in objects created via the API

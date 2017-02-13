@@ -6,6 +6,9 @@ https://www.easypost.com/docs/api.html#trackers
 */
 
 import (
+	"encoding/json"
+	"errors"
+	"fmt"
 	"time"
 )
 
@@ -100,4 +103,66 @@ func NewTracker(id string, createdAt, updatedAt time.Time) Tracker {
 		UpdatedAt: updatedAt,
 		Object:    "Tracker",
 	}
+}
+
+//TrackerList is the object required to request a list of trackers
+type TrackerList struct {
+	BeforeID      string `json:"before_id"`
+	AfterID       string `json:"after_id"`
+	StartDatetime string `json:"start_datetime"`
+	EndDatetime   string `json:"end_datetime"`
+	PageSize      int    `json:"page_size"`
+	TrackingCode  string `json:"tracking_code"`
+	Carrier       string `json:"carrier"`
+
+	Trackers []Tracker `json:"trackers"`
+	HasMore  bool      `json:"has_more"`
+}
+
+//Create creates a new tracker on Easypost
+func (t *Tracker) Create() error {
+	obj, err := Request.do("POST", "tracker", "", t.getCreatePayload("tracker"))
+	if err != nil {
+		return errors.New("Failed to request EasyPost tracker creation")
+	}
+	return json.Unmarshal(obj, &t)
+}
+
+//Get retrieves a tracker
+func (t *Tracker) Get() error {
+	obj, _ := Request.do("GET", "tracker", t.ID, "")
+	return json.Unmarshal(obj, &t)
+}
+
+//Get retrieve the list of trackers based on the given query
+func (tl *TrackerList) Get() error {
+	var payload = ""
+	if tl.BeforeID != "" {
+		payload = fmt.Sprintf("%s&before_id=%s", payload, tl.BeforeID)
+	}
+	if tl.AfterID != "" {
+		payload = fmt.Sprintf("%s&after_id=%s", payload, tl.AfterID)
+	}
+	if tl.StartDatetime != "" {
+		payload = fmt.Sprintf("%s&start_datetime=%s", payload, tl.StartDatetime)
+	}
+	if tl.PageSize > 0 {
+		payload = fmt.Sprintf("%s&page_size=%v", payload, tl.PageSize)
+	}
+	if tl.TrackingCode != "" {
+		payload = fmt.Sprintf("%s&tracking_code=%s", payload, tl.TrackingCode)
+	}
+	if tl.Carrier != "" {
+		payload = fmt.Sprintf("%s&carrier=%s", payload, tl.Carrier)
+	}
+	obj, _ := Request.do("GET", "tracker", "", payload)
+	return json.Unmarshal(obj, &tl)
+}
+
+func (t Tracker) getCreatePayload(prefix string) string {
+	var bodyString = ""
+	bodyString = fmt.Sprintf("%s&%s[tracking_code]=%s", bodyString, prefix, t.TrackingCode)
+	bodyString = fmt.Sprintf("%s&%s[carrier]=%s", bodyString, prefix, t.Carrier)
+
+	return bodyString
 }

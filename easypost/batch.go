@@ -44,7 +44,7 @@ func (b *Batch) AddShipment(shipments []string) error {
 	}
 	obj, err := Request.do("POST", "shipment", fmt.Sprintf("%v/add_shipments", b.ID), bodyString)
 	if err != nil {
-		return errors.New("Failed to request EasyPost shipment insurance")
+		return errors.New("Failed to request EasyPost shipment add in batch")
 	}
 	return json.Unmarshal(obj, &b)
 }
@@ -54,6 +54,17 @@ func (b *Batch) Create() error {
 	obj, err := Request.do("POST", "batch", "", b.getCreatePayload("batch"))
 	if err != nil {
 		return errors.New("Failed to request EasyPost batch creation")
+	}
+	return json.Unmarshal(obj, &b)
+}
+
+func (b *Batch) GenerateLabel(format string) error {
+	if format == "" {
+		format = LabelFormatPDF
+	}
+	obj, err := Request.do("POST", "batch", fmt.Sprintf("%v/label", b.ID), fmt.Sprintf("file_format=%v", format))
+	if err != nil {
+		return errors.New("Failed to generate label")
 	}
 	return json.Unmarshal(obj, &b)
 }
@@ -70,6 +81,18 @@ func (b *Batch) Get() error {
 	obj, err := Request.do("GET", "batch", b.ID, "")
 	if err != nil {
 		return errors.New("Failed to retrieve EasyPost batch")
+	}
+	return json.Unmarshal(obj, &b)
+}
+
+func (b *Batch) RemoveShipments(shipments []string) error {
+	bodyString := ""
+	for i := range shipments {
+		bodyString = fmt.Sprintf("%v&batch[shipments][%v][id]=%v", bodyString, i, shipments[i])
+	}
+	obj, err := Request.do("POST", "shipment", fmt.Sprintf("%v/remove_shipments", b.ID), bodyString)
+	if err != nil {
+		return errors.New("Failed to request EasyPost shipment removal from batch")
 	}
 	return json.Unmarshal(obj, &b)
 }

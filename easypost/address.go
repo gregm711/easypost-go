@@ -41,7 +41,8 @@ type Address struct {
 	FederalTaxID    string        `json:"federal_tax_id"`
 	StateTaxID      string        `json:"state_tax_id"`
 	Verifications   Verifications `json:"verifications"`
-	Verification    bool          `json:"verify"`
+	Verify          []string      `json:"verify"`
+	VerifyStrict    []string      `json:"verify_strict"`
 }
 
 type Verifications struct {
@@ -50,8 +51,14 @@ type Verifications struct {
 }
 
 type Verification struct {
-	Success bool         `json:"success"`
-	Errors  []FieldError `json:"errors"`
+	Success bool                `json:"success"`
+	Errors  []FieldError        `json:"errors"`
+	Details VerificationDetails `json:"details"`
+}
+
+type VerificationDetails struct {
+	Latitude  int `json:"latitude"`
+	Longitude int `json:"longitude"`
 }
 
 //Create a new EasyPost address
@@ -69,20 +76,6 @@ func (a *Address) Get() error {
 	return json.Unmarshal(obj, &a)
 }
 
-//Verify creates and verifies an address in EasyPost
-func (a *Address) Verify() error {
-	err := a.Create()
-	if err == nil {
-		if !a.Verifications.Delivery.Success && len(a.Verifications.Delivery.Errors) > 0 {
-			err = errors.New("Address didn't pass the EasyPost verification")
-		}
-		if a.ID == "" {
-			err = errors.New("Couldn't retrieve an EasyPost ID")
-		}
-	}
-	return err
-}
-
 //getRequestPayload returns the payload to append to the EasyPost API request
 func (a Address) getPayload(prefix string) string {
 	payloadValues := reflect.ValueOf(a)
@@ -93,8 +86,12 @@ func (a Address) getPayload(prefix string) string {
 		if payloadValues.Field(i).Interface() == nil || payloadValues.Field(i).Interface() == "" {
 			continue
 		}
-		if payloadValues.Type().Field(i).Name == "Verification" && payloadValues.Field(i).Interface().(bool) {
-			bodyString = fmt.Sprintf("%v&verify[]=delivery", bodyString)
+		if payloadValues.Type().Field(i).Name == "Verify" && payloadValues.Field(i).Interface().(bool) {
+			bodyString = fmt.Sprintf("%v&verify[]=%s", bodyString, payloadValues.Field(i).Interface())
+			continue
+		}
+		if payloadValues.Type().Field(i).Name == "VerifyStrict" && payloadValues.Field(i).Interface().(bool) {
+			bodyString = fmt.Sprintf("%v&verify_strict[]=%s", bodyString, payloadValues.Field(i).Interface())
 			continue
 		}
 		if payloadValues.Type().Field(i).Name == "Residential" {

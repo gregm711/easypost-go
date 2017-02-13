@@ -61,7 +61,7 @@ func (o Order) ErrorString() string {
 func (o *Order) Create() error {
 	obj, err := Request.do("POST", "order", "", o.getCreatePayload())
 	if err != nil {
-		return errors.New("Failed to request EasyPost shipment creation")
+		return errors.New("Failed to request EasyPost order creation")
 	}
 	return json.Unmarshal(obj, &o)
 }
@@ -77,7 +77,25 @@ func (o *Order) Buy() error {
 
 	obj, err := Request.do("POST", "order", fmt.Sprintf("%v/buy", o.ID), fmt.Sprintf("carrier=%v&service=%v", o.Carrier, o.Service))
 	if err != nil {
-		return errors.New("Failed to request EasyPost shipment creation")
+		return errors.New("Failed to request EasyPost order purchase")
+	}
+	return json.Unmarshal(obj, &o)
+}
+
+//Get retrieves an order from EasyPost
+func (o *Order) Get() error {
+	obj, err := Request.do("GET", "order", o.ID, "")
+	if err != nil {
+		return errors.New("Failed to retrieve EasyPost order")
+	}
+	return json.Unmarshal(obj, &o)
+}
+
+//GetByReference retrieves an order from EasyPost using the reference value
+func (o *Order) GetByReference() error {
+	obj, err := Request.do("GET", "order", o.Reference, "")
+	if err != nil {
+		return errors.New("Failed to retrieve EasyPost order using reference value")
 	}
 	return json.Unmarshal(obj, &o)
 }
