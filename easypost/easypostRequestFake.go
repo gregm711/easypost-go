@@ -45,5 +45,9 @@ func (rif RequestControllerFake) do(method string, objectType string, objectUrl 
 			return []byte(fake.EasypostFakeCustoms), nil
 		}
 	}
+
+	if objectType == "batch" {
+		return []byte(fake.EasypostFakeBatch), nil
+	}
 	return nil, nil
 }

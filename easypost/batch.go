@@ -44,7 +44,7 @@ func (b *Batch) AddShipment(shipments []string) error {
 	}
 	obj, err := Request.do("POST", "shipment", fmt.Sprintf("%v/add_shipments", b.ID), bodyString)
 	if err != nil {
-		return errors.New("Failed to request EasyPost shipment insurance")
+		return errors.New("Failed to add shipment to a batch")
 	}
 	return json.Unmarshal(obj, &b)
 }
@@ -61,7 +61,18 @@ func (b *Batch) Create() error {
 func (b *Batch) GenerateScanForm() error {
 	obj, err := Request.do("POST", "batch", fmt.Sprintf("%v/scan_form", b.ID), "")
 	if err != nil {
-		return errors.New("Failed to request EasyPost shipment insurance")
+		return errors.New("Failed to generate scan form")
+	}
+	return json.Unmarshal(obj, &b)
+}
+
+func (b *Batch) GenerateLabel(format string) error {
+	if format == "" {
+		format = LabelFormatPDF
+	}
+	obj, err := Request.do("POST", "batch", fmt.Sprintf("%v/label", b.ID), fmt.Sprintf("file_format=%v", format))
+	if err != nil {
+		return errors.New("Failed to generate label")
 	}
 	return json.Unmarshal(obj, &b)
 }

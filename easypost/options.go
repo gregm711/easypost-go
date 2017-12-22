@@ -7,6 +7,11 @@ https://www.easypost.com/docs/api.html#options
 
 import "fmt"
 
+const (
+	//IncotermDDP is the value for DeliveryDutyPaid
+	IncotermDDP = "DDP"
+)
+
 //Options is an EasyPost object and defines the list of carrier-specific options for a shipment
 type Options struct {
 	AdditionalHandling       bool   `json:"additional_handling"`
@@ -20,8 +25,8 @@ type Options struct {
 	ByDrone                  bool   `json:"by_drone"`
 	CarbonNeutral            bool   `json:"carbon_neutral"`
 	CodAmount                string `json:"cod_amount"`
+	CodMethod                string `json:"cod_method"`
 	Currency                 string `json:"currency"`
-	DeliveredDutyPaid        bool   `json:"delivery_duty_paid"`
 	DeliveryConfirmation     string `json:"delivery_confirmation"`
 	DryIce                   bool   `json:"dry_ice"`
 	DryIceMedical            string `json:"dry_ice_medical"`
@@ -30,6 +35,7 @@ type Options struct {
 	HandlingInstructions     string `json:"handling_instructions"`
 	Hazmat                   string `json:"hazmat"`
 	HoldForPickup            bool   `json:"hold_for_pickup"`
+	Incoterm                 string `json:"incoterm"`
 	InvoiceNumber            string `json:"invoice_number"`
 	LabelDate                string `json:"label_date"`
 	LabelFormat              string `json:"label_format"`
@@ -56,8 +62,8 @@ func (o Options) getCreatePayload(prefix string) string {
 	if o.LabelDate != "" {
 		bodyString = fmt.Sprintf("%v&%v[label_date]=%v", bodyString, prefix, o.LabelDate)
 	}
-	if o.DeliveredDutyPaid {
-		bodyString = fmt.Sprintf("%v&%v[delivered_duty_paid]=true", bodyString, prefix)
+	if o.Incoterm != "" {
+		bodyString = fmt.Sprintf("%v&%v[incoterm]=%v", bodyString, prefix, o.Incoterm)
 	}
 	if o.DeliveryConfirmation != "" {
 		bodyString = fmt.Sprintf("%v&%v[delivery_confirmation]=%v", bodyString, prefix, o.DeliveryConfirmation)
