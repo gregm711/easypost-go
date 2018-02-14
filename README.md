@@ -13,7 +13,7 @@ go get github.com/gregm711/easypost-go
 
 Then on your go project
 ```
-import "github.com/greg711/easypost-go/easypost"
+import "github.com/gregm711/easypost-go/easypost"
 ```
 
 ## Setup
@@ -75,7 +75,7 @@ if order.Error != nil {
 }
 ```
 
-Beside the generic error returned by the function, as shown in the first example, the `Error` field of the object is populated with the information EasyPost is returning. 
+Beside the generic error returned by the function, as shown in the first example, the `Error` field of the object is populated with the information EasyPost is returning.
 
 ```
 //Error is an EasyPost object representing an error
