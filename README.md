@@ -8,12 +8,12 @@ _**Note:** As far as possible, data structure in this package is reflecting the 
 
 First you need to get the package
 ```
-go get github.com/empatica/easypost-go
+go get github.com/gregm711/easypost-go
 ```
 
 Then on your go project
 ```
-import "github.com/empatica/easypost-go/easypost"
+import "github.com/greg711/easypost-go/easypost"
 ```
 
 ## Setup
