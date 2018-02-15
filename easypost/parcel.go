@@ -6,6 +6,8 @@ https://www.easypost.com/docs/api.html#parcels
 */
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 )
@@ -28,7 +30,6 @@ type Parcel struct {
 //getCreatePayload returns the payload to append to the EasyPost API request
 func (p Parcel) getCreatePayload(prefix string) string {
 	bodyString := ""
-
 	if p.ID != "" {
 		bodyString = fmt.Sprintf("%v&%v[id]=%v", bodyString, prefix, p.ID)
 	} else {
@@ -41,6 +42,14 @@ func (p Parcel) getCreatePayload(prefix string) string {
 		}
 		bodyString = fmt.Sprintf("%v&%v[weight]=%v", bodyString, prefix, p.Weight)
 	}
-
 	return bodyString
+}
+
+// Create an EasyPost parcel
+func (p *Parcel) Create() error {
+	obj, err := Request.do("POST", "parcel", "", p.getCreatePayload("parcel"))
+	if err != nil {
+		return errors.New("Failed to request EasyPost parcel creation")
+	}
+	return json.Unmarshal(obj, &p)
 }
