@@ -162,6 +162,14 @@ func (s *Shipment) ConvertLabel(format string) error {
 	return json.Unmarshal(obj, &s)
 }
 
+func (s *Shipment) Get() error {
+	obj, err := Request.do("GET", "shipment", fmt.Sprintf(s.ID), "")
+	if err != nil {
+		return fmt.Errorf("Failed to fetch shipment from ID: %v", err)
+	}
+	return json.Unmarshal(obj, &s)
+}
+
 //Insure is requesting insurance for the given amount
 func (s *Shipment) Insure(amount float32) error {
 	obj, err := Request.do("POST", "shipment", fmt.Sprintf("%v/insure", s.ID), fmt.Sprintf("amount=%v", amount))
