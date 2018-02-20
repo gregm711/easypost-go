@@ -53,6 +53,7 @@ type Tracker struct {
 	TrackingDetails []TrackingDetails `json:"tracking_details"`
 	CarrierDetail   Carrier           `json:"carrier_detail"`
 	Fees            []Fee             `json:"fees"`
+	PublicURL       string            `json:"public_url"`
 }
 
 //TrackingDetails is an EasyPost object that defines the details for a shipping tracker
